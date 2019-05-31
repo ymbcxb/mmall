@@ -23,6 +23,22 @@ public class User {
 
     private Date updateTime;
 
+    public User(Integer id, String username, String password, String email, String phone, String question, String answer, Integer role, Date createTime, Date updateTime) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.question = question;
+        this.answer = answer;
+        this.role = role;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
+
+    public User() {
+    }
+
     public Integer getId() {
         return id;
     }

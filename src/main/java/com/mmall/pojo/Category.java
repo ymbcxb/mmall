@@ -17,6 +17,19 @@ public class Category {
 
     private Date updateTime;
 
+    public Category(Integer id, Integer parentId, String name, Boolean status, Integer sortOrder, Date createTime, Date updateTime) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.status = status;
+        this.sortOrder = sortOrder;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
+
+    public Category() {
+    }
+
     public Integer getId() {
         return id;
     }
