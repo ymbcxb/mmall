@@ -73,20 +73,28 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServerResponse<String> checkValid(String str,String type){
         if(StringUtils.isNotBlank(type)){
+            boolean flag = false;
             //校验
             if(Const.USERNAME.equals(type)){
+                flag = true;
                 int resultCount = userMapper.checkUsername(str);
                 if(resultCount > 0){
                     return ServerResponse.createByErrorMessage("用户名已存在");
                 }
             }
             if(Const.EMAIL.equals(type)){
+                flag = true;
                 int resultCount = userMapper.checkEmail(str);
                 if(resultCount > 0){
                     return ServerResponse.createByErrorMessage("邮箱已存在");
                 }
             }
-            return ServerResponse.createBySuccessMessage("校验成功");
+            if(flag) {
+                return ServerResponse.createBySuccessMessage("校验成功");
+            }
+            else{
+                return ServerResponse.createByErrorMessage("参数错误");
+            }
         }else{
             return ServerResponse.createByErrorMessage("参数错误");
         }
