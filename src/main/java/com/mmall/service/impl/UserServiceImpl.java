@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.security.provider.MD5;
 
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 import static com.mmall.common.Const.TOKEN_PREFIX;
@@ -169,7 +170,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse<String> update_information(User user) {
+    public ServerResponse<String> update_information(HttpSession session,User user) {
         //检查邮箱是否可用
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(),user.getId());
         if(resultCount > 0){
@@ -178,6 +179,10 @@ public class UserServiceImpl implements IUserService {
         //todo 检查电话是否可用
         int updateCount = userMapper.updateByPrimaryKeySelective(user);
         if( updateCount > 0){
+            //重新设置Session的值
+            User updateUser = userMapper.selectByPrimaryKey(user.getId());
+            updateUser.setPassword(StringUtils.EMPTY);
+            session.setAttribute(Const.CURRENT_USER,updateUser);
             return ServerResponse.createBySuccess("更新个人信息成功");
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
