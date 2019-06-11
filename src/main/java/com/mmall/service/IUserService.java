@@ -29,4 +29,6 @@ public interface IUserService {
     ServerResponse<String> update_information(HttpSession session,User user);
 
     ServerResponse<User> getInformation(Integer userId);
+
+    ServerResponse<String> checkAdminRole(User user);
 }
