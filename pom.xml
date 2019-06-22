@@ -185,6 +185,13 @@
             <artifactId>guava</artifactId>
             <version>27.0.1-jre</version>
         </dependency>
+
+        <!--添加Joda-Time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.2</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>mmall</finalName>
