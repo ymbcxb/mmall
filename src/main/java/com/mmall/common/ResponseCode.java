@@ -9,7 +9,7 @@ package com.mmall.common;
 public enum ResponseCode {
     SUCCESS(200,"SUCCESS"),
     ERROR(1,"ERROR"),
-    NEDD_LOGIN(10,"NEED_LOGIN"),
+    NEED_LOGIN(10,"NEED_LOGIN"),
     ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT");
 
     private final int code;
