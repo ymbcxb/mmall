@@ -50,7 +50,7 @@ public class ProductManageController {
     public ServerResponse productSave(HttpSession session, Product product){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEDD_LOGIN.getCode(),"用户未登录，请登录管理员");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         if(iUserService.checkAdminRole(user).success()){
             //增加产品的业务逻辑
@@ -71,7 +71,7 @@ public class ProductManageController {
     public ServerResponse setSaleStateus(HttpSession session, Integer productId,Integer status){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEDD_LOGIN.getCode(),"用户未登录，请登录管理员");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         if(iUserService.checkAdminRole(user).success()){
             //业务逻辑
@@ -92,7 +92,7 @@ public class ProductManageController {
     public ServerResponse getDetail(HttpSession session, Integer productId){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEDD_LOGIN.getCode(),"用户未登录，请登录管理员");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         if(iUserService.checkAdminRole(user).success()){
             //业务逻辑
@@ -113,7 +113,7 @@ public class ProductManageController {
     public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEDD_LOGIN.getCode(),"用户未登录，请登录管理员");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         if(iUserService.checkAdminRole(user).success()){
             //业务逻辑
@@ -136,7 +136,7 @@ public class ProductManageController {
     public ServerResponse productSearch(HttpSession session,String productName,Integer productId, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEDD_LOGIN.getCode(),"用户未登录，请登录管理员");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         if(iUserService.checkAdminRole(user).success()){
             //业务逻辑
