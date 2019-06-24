@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author ymbcxb
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Package com.mmall.controller.portal
  * @date 2019/6/22 20:36
  */
-@Controller
+@RestController
 @RequestMapping("/product/")
 public class ProductController {
     @Autowired
