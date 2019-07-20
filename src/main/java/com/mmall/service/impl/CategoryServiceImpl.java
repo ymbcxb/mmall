@@ -68,6 +68,7 @@ public class CategoryServiceImpl implements ICategoryService {
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
         if(CollectionUtils.isEmpty(categoryList)){
             logger.info("未找到当前分类的子分类");
+            return ServerResponse.createByErrorMessage("未找到该品类");
         }
         return ServerResponse.createBySuccess(categoryList);
     }

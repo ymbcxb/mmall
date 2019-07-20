@@ -1,5 +1,7 @@
 package com.mmall.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.math.BigDecimal;
 
 /**
@@ -8,6 +10,7 @@ import java.math.BigDecimal;
  * @Package com.mmall.vo
  * @date 2019/6/12 20:04
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductDetailVo {
 
     private Integer id;

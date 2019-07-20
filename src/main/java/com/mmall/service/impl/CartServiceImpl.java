@@ -57,7 +57,7 @@ public class CartServiceImpl implements ICartService {
             cart.setQuantity(count);
             cartMapper.updateByPrimaryKeySelective(cart);
         }
-        CartVo cartVo = this.getCartVoLimit(userId);
+        CartVo cartVo = this.getCartVoList(userId);
         return ServerResponse.createBySuccess(cartVo);
     }
 
@@ -75,7 +75,7 @@ public class CartServiceImpl implements ICartService {
             cart.setQuantity(count);
             cartMapper.updateByPrimaryKeySelective(cart);
         }
-        CartVo cartVo = this.getCartVoLimit(userId);
+        CartVo cartVo = this.getCartVoList(userId);
         return ServerResponse.createBySuccess(cartVo);
     }
 
@@ -86,13 +86,13 @@ public class CartServiceImpl implements ICartService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
         cartMapper.deleteByUserIdProductIds(userId,productList);
-        CartVo cartVo = this.getCartVoLimit(userId);
+        CartVo cartVo = this.getCartVoList(userId);
         return ServerResponse.createBySuccess(cartVo);
     }
 
     @Override
     public ServerResponse<CartVo> list(Integer userId){
-        CartVo cartVo = this.getCartVoLimit(userId);
+        CartVo cartVo = this.getCartVoList(userId);
         return ServerResponse.createBySuccess(cartVo);
     }
 
@@ -108,7 +108,7 @@ public class CartServiceImpl implements ICartService {
         return ServerResponse.createBySuccess(resultCount);
     }
 
-    private CartVo getCartVoLimit(Integer userId){
+    private CartVo getCartVoList(Integer userId){
         CartVo cartVo = new CartVo();
         List<Cart> cartList = cartMapper.selectCartByUserId(userId);
         List<CartProductVo> cartProductVoList = Lists.newArrayList();
@@ -152,7 +152,9 @@ public class CartServiceImpl implements ICartService {
                     cartProductVo.setProductChecked(cartItem.getChecked());
                 }
                 if(cartItem.getChecked() == Const.Cart.CHECKED){
-                    cartTotalPrice = BigDecimalUtil.add(cartTotalPrice.doubleValue(),cartProductVo.getProductTotalPrice().doubleValue());
+                    if(product != null){
+                        cartTotalPrice = BigDecimalUtil.add(cartTotalPrice.doubleValue(),cartProductVo.getProductTotalPrice().doubleValue());
+                    }
                 }
                 cartProductVoList.add(cartProductVo);
             }

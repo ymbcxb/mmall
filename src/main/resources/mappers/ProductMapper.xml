@@ -196,4 +196,21 @@
       </if>
     </where>
   </select>
+
+  <select id="selectListByCidAndOrderBy" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    <where>
+      <if test="categoryId != null">
+        and category_id = #{categoryId}
+      </if>
+      <if test="orderBy == 'price_desc' ">
+        order By price desc
+      </if>
+      <if test="orderBy == 'price_asc' ">
+        order By price asc
+      </if>
+    </where>
+  </select>
 </mapper>

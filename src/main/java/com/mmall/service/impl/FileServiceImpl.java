@@ -28,7 +28,7 @@ public class FileServiceImpl implements IFileService {
         //扩展名
         String fileExtensionName = fileName.substring(fileName.lastIndexOf(".")+1);
         //上传文件的名字
-        String uploadFileName = UUID.randomUUID().toString()+ "" + fileExtensionName;
+        String uploadFileName = UUID.randomUUID().toString()+ "." + fileExtensionName;
         logger.info("开始上传文件,上传的文件名:{},上传的路径:{},新文件名：{}",fileName,path,uploadFileName);
         //保存文件
         File fileDir = new File(path);

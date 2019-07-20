@@ -11,12 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-<form action="form1" action="/manage/product/upload" method="post" enctype="multipart/form-data">
+SpringMVC上传文件
+<form action="/manage/product/upload/" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" value="普通文件上传文件">
 </form>
 
-<form action="form1" action="/manage/product/richtext_img_upload" method="post" enctype="multipart/form-data">
+富文本上传文件
+<form action="/manage/product/richtext_img_upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" value="富文本图片上传文件">
 </form>

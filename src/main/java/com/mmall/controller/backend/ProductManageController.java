@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,8 @@ import java.util.Map;
  * @Package com.mmall.controller.backend
  * @date 2019/6/12 19:31
  */
-@RestController("/manage/product")
+@RestController
+@RequestMapping("/manage/product")
 public class ProductManageController {
 
     @Autowired
@@ -110,14 +112,16 @@ public class ProductManageController {
      * @return
      */
     @GetMapping("/list")
-    public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+    public ServerResponse getList(HttpSession session,
+                                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                                  @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         if(iUserService.checkAdminRole(user).success()){
             //业务逻辑
-            return iProductService.getProductList(pageNum,pageSize);
+            return iProductService.getProductListManage(pageNum,pageSize);
         }else{
             return ServerResponse.createByErrorMessage("无权限操作");
         }
@@ -152,7 +156,7 @@ public class ProductManageController {
      * @param request
      * @return
      */
-    @GetMapping("/upload")
+    @RequestMapping("/upload")
     public ServerResponse upload(HttpSession session,MultipartFile file, HttpServletRequest request){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
@@ -161,7 +165,7 @@ public class ProductManageController {
         if(iUserService.checkAdminRole(user).success()){
             String path = request.getSession().getServletContext().getRealPath("upload");
             String targetFileName = iFileService.upload(file,path);
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") +"/"+ targetFileName;
 
             Map fileMap = Maps.newHashMap();
             fileMap.put("uri",targetFileName);
@@ -172,6 +176,14 @@ public class ProductManageController {
         }
     }
 
+    /**
+     * 富文本上传图片
+     * @param session
+     * @param file
+     * @param request
+     * @param response
+     * @return
+     */
     @GetMapping("/richtext_img_upload")
     public Map richtextImgUpload(HttpSession session, MultipartFile file, HttpServletRequest request, HttpServletResponse response){
         Map resultMap = Maps.newHashMap();

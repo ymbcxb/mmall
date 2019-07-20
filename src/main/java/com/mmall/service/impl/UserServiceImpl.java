@@ -1,5 +1,7 @@
 package com.mmall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
 
 import static com.mmall.common.Const.TOKEN_PREFIX;
@@ -36,7 +39,6 @@ public class UserServiceImpl implements IUserService {
         if(resultCount == 0){
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
-        //todo 密码MD5
         String md5Password = MD5Util.MD5EncodeUtf8((password));
 
         //检查用户登陆密码是否正确
@@ -44,7 +46,11 @@ public class UserServiceImpl implements IUserService {
         if(user == null){
             return ServerResponse.createByErrorMessage("用户或密码错误");
         }
-        user.setPassword(StringUtils.EMPTY);
+        //不显示敏感信息
+        user.setPassword(null);
+        user.setPhone(null);
+        user.setQuestion(null);
+        user.setAnswer(null);
         return ServerResponse.createBySuccess("登陆成功",user);
     }
 
@@ -110,7 +116,7 @@ public class UserServiceImpl implements IUserService {
         }
         String question = userMapper.selectQuestionByUsername(username);
         if(StringUtils.isNotBlank(question)){
-            return ServerResponse.createBySuccessMessage(question);
+            return ServerResponse.createBySuccess(question);
         }
         return ServerResponse.createByErrorMessage("该用户未设置找回密码的问题");
     }
@@ -181,7 +187,8 @@ public class UserServiceImpl implements IUserService {
         if( updateCount > 0){
             //重新设置Session的值
             User updateUser = userMapper.selectByPrimaryKey(user.getId());
-            updateUser.setPassword(StringUtils.EMPTY);
+            updateUser.setPassword(null);
+            updateUser.setPhone(null);
             session.setAttribute(Const.CURRENT_USER,updateUser);
             return ServerResponse.createBySuccess("更新个人信息成功");
         }
@@ -212,4 +219,11 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public ServerResponse<PageInfo> getUserList(Integer pageSize,Integer pageNum){
+        PageHelper.startPage(pageNum,pageSize);
+        List<User> users = userMapper.selectAllUser();
+        PageInfo pageInfo = new PageInfo(users);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
 }

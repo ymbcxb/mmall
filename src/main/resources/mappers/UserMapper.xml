@@ -191,4 +191,10 @@
     where email = #{email}
     and id != #{userId}
   </select>
+
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_user
+  </select>
 </mapper>
