@@ -1,6 +1,5 @@
 package com.mmall.util;
 
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +46,7 @@ public class FTPUtil {
     }
 
     private boolean uploadFile(String remotePath,List<File> fileList) {
-        boolean uploaded = true;
+        boolean uploaded = false;
         FileInputStream fis = null;
         //连接FTP服务器
         if(connectServer(this.ip,this.port,this.user,this.passwd)){
@@ -62,6 +61,7 @@ public class FTPUtil {
                     fis = new FileInputStream(fileItem);
                     ftpClient.storeFile(fileItem.getName(),fis);
                 }
+                uploaded = true;
             } catch (IOException e) {
                 logger.error("上传文件异常");
                 uploaded = false;

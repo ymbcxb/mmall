@@ -24,7 +24,7 @@
     <bean id="sqlsessionfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mappers/*Mapper.xml"/>
-        <!--<property name="configLocation" value="classpath:mybatis/mybatis.xml"/>-->
+        <property name="configLocation" value="classpath:mybatis/mybatis.xml"/>
     </bean>
     <!-- Mapper映射文件的包扫描器  -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
