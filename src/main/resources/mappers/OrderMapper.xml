@@ -204,6 +204,20 @@
     <include refid="Base_Column_List"/>
     from mmall_order
     where order_no = #{orderNo}
-    and userId = #{userId}
+    and user_id = #{userId}
+  </select>
+
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="long">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mmall_order
+    where order_no = #{orderNo}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mmall_order
+    where user_id = #{userId}
   </select>
 </mapper>
